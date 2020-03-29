@@ -98,27 +98,28 @@ class BoolFilterNode:
         else:
             rospy.logerror("{} already an output or no mapping available!".format(key))
 
-rospy.init_node("bool_filter_node")
+if __name__ == "__main__":
+    rospy.init_node("bool_filter_node")
 
-logic_map = rospy.get_param("~map")
-in_symbols = rospy.get_param("~in")
-out_symbols = rospy.get_param("~out")
+    logic_map = rospy.get_param("~map")
+    in_symbols = rospy.get_param("~in")
+    out_symbols = rospy.get_param("~out")
 
-bool_filter = BoolFilterNode(verbose=False)
+    bool_filter = BoolFilterNode(verbose=False)
 
-for key, value in in_symbols.items():
-    v = value.split(",")
-    topic_name = v[0].strip()
-    topic_type = v[1].strip() if len(v) > 1 else "Bool"
-    bool_filter.add_input(key, topic_name, eval(topic_type))
+    for key, value in in_symbols.items():
+        v = value.split(",")
+        topic_name = v[0].strip()
+        topic_type = v[1].strip() if len(v) > 1 else "Bool"
+        bool_filter.add_input(key, topic_name, eval(topic_type))
 
-for key, value in logic_map.items():
-    bool_filter.add_mapping(key, mapping = value)
+    for key, value in logic_map.items():
+        bool_filter.add_mapping(key, mapping = value)
 
-for key, value in out_symbols.items():
-    v = value.split(",")
-    topic_name = v[0].strip()
-    topic_type = v[1].strip() if len(v) > 1 else "Bool"
-    bool_filter.make_output(key, topic_name, eval(topic_type))
+    for key, value in out_symbols.items():
+        v = value.split(",")
+        topic_name = v[0].strip()
+        topic_type = v[1].strip() if len(v) > 1 else "Bool"
+        bool_filter.make_output(key, topic_name, eval(topic_type))
 
-rospy.spin()
+    rospy.spin()
