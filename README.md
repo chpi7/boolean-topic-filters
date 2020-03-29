@@ -6,9 +6,13 @@ Want to combine multiple signals into one using boolean logic? This package allo
 - or
 - not
 
+### Planned Operations
+- implication
+- xor
+
 ## Demo
 Simply define inputs, outputs as well as mappings. Mappings also support simple variable replacement:
-```
+```xml
 <node pkg="boolean_topic_filters" type="bool_filters.py" name="bool_filter_node">
     <rosparam param="in">
         A : topic_A, Int32
